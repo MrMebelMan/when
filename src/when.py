@@ -8,13 +8,24 @@ coin_aliases = {
     'BTC': ('bitcoin', 'corn', 'beethoven', ),
     'LTC': ('chikun', 'litecoin', ),
     'XMR': ('monero', ),
-    'BCH': ('bcash', 'bcrash', 'btrash', ),
+    'BCH': ('bitcoin cash', 'bcash', 'bcrash', 'btrash', ),
     'ZEC': ('zcash', ),
     'ETH': ('ethereum', 'vitalik'),
     'DOGE': ('dogecoin', 'shibe', ),
     'LSK': ('lisk', ),
     'XTZ': ('tezos', ),
     'XRP': ('ripple', 'cripple' ),
+    'IOTA': ('miota', 'idiota' ),
+    'USDT': ('tether', ),
+    'ADA': ('cardano', ),
+    'TRX': ('tron', ),
+    'ETC': ('ethereum classic', ),
+    'BNB': ('binance', 'binance coin'),
+    'VET': ('vechain mainnet', 'mainnet vechain'),
+    'VEN': ('vechain'),
+    'BTG': ('bitcoin gold', ),
+    'BTS': ('bitshares', ),
+    'XVG': ('verge', ),
 }
 
 
@@ -77,7 +88,7 @@ def parse_support_data(coin, support_data, model):
             return 'Trezor %s: supported since v%s.' % (model.upper(), support_info)
     else:
         if not supported_coin:
-            return 'Trezor %s: not supported.' % model.upper()
+            return 'Trezor %s: not supported. No ETA.' % model.upper()
         reason = support_data['t' + model + '_unsupported'][supported_coin]
         return 'Trezor %s: not supported. Reason: %s.' % (model.upper(), reason.replace('(AUTO) ', ''))
 
@@ -86,7 +97,7 @@ def get_info(coin, support_data, webwallet_support):
     ret = ''
 
     for key, aliases in coin_aliases.items():
-        if coin in aliases:
+        if coin.lower() in aliases:
             coin = key
             break
 
@@ -116,8 +127,12 @@ if __name__ == '__main__':
     if len(argv) >= 2:
         if argv[1] == 'lambo' or argv[1] == 'moon':
             print('soon(TM)')
-        elif argv[1]:
-            print(get_info(argv[1], support_data, webwallet_support))
+        else:
+            for strip in ['token', 'coin']:
+                if strip.lower() in argv:
+                    argv.remove(strip)
+
+            print(get_info(' '.join(argv[1:]), support_data, webwallet_support))
     else:
         print('Usage: when coin_name')
 
