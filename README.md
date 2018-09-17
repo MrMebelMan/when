@@ -32,3 +32,7 @@ echo "export PATH=\$PATH:$(pwd)" >> ~/.zshrc
 <code>
 set -gx PATH $PATH (pwd)
 </code>
+
+# Bugs
+
+Probably infinite.
