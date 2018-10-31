@@ -98,12 +98,12 @@ if __name__ == '__main__':
                     coin = key
                     break
 
+            ret = ''
             if coin.upper() in webwallet_support:
-                print('Already supported by Wallet.')
-            else:
-                ret = parse_support_data(coin, support_json['trezor1'], model='1') + '\n'
-                ret += parse_support_data(coin, support_json['trezor2'], model='T')
-                print(ret)
+                ret = 'Already supported by Wallet.\n'
+            ret += parse_support_data(coin, support_json['trezor1'], model='1') + '\n'
+            ret += parse_support_data(coin, support_json['trezor2'], model='T')
+            print(ret)
     else:
         print('Usage: when coin_name')
 
